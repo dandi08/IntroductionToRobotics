@@ -18,7 +18,7 @@ Values coming from potentiometers must be mapped to values that will be given as
 
 Video link: https://drive.google.com/file/d/1j_6o8F_s4XQYbD_QbgjprxdQxxQyMSDT/view?usp=sharing
 
-# Homework 1
+# Homework 2
 Task requirements:
 
 Using 5LEDs, 1 button, 1 buzzer, resistors and wires accordingly, create the traffic lights for a crosswalk.
