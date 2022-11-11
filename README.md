@@ -41,3 +41,24 @@ Stay safe and be carefull when you cross the stree regardless of the traffic lig
 </p>
 
 Video link: https://drive.google.com/file/d/1m-6RgrHTZjZSGyU8Q3obbON2Pv1ohxRz/view?usp=share_link
+
+# Homework 3
+Task requirements:
+
+Using 7 segment display, 1 joystic, resistors and wires accordingly, create a minigame where the player can draw whatever he wants on the display.
+There will be 2 states:
+In the first one the player can move the segment with the joystick. The selected segment will blink regarless of its state. Then in order to change and go to next stage he can press the button shortly. If he presses the button for more than 2 seconds the display resets. 
+In the second state the player can change the state of the selected segment by moving the joystick, and then return to first state with a button press.
+
+Implementation:
+
+I've used a 4 display 7 segment display. I've kept the same requirements but for my implementation the player can walk through all the displays.
+
+<p align="center">
+  <img src="tema3/tema3_poza1.jpeg" width="350" title="angle1" > <br>
+</p>
+<p align="center">
+  <img src="tema3/tema3_poza2.jpeg" width="350" title="angle1" > <br>
+</p>
+
+Video link: https://drive.google.com/file/d/1m-6RgrHTZjZSGyU8Q3obbON2Pv1ohxRz/view?usp=share_link
