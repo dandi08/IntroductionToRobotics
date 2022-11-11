@@ -22,6 +22,7 @@ const int indexXAxis = 0;
 const int indexYAxis = 1;
 
 const int debounceDelay = 50;
+const int incrementVar = 1;
 
 const int sevenSegmentPinsArray[] =  {pinA, pinB, pinC, pinD, pinE, pinF, pinG, pinDp};
 const int fourDisplayPinsArray[] =  {pinGroundDisplay0, pinGroundDisplay1, pinGroundDisplay2, pinGroundDisplay3};
@@ -38,8 +39,14 @@ const int right = 3;
 const int leftOrDown = 0;
 const int rightOrUp = 1;
 const int notAState = -1;
+
+const int selectedSegHighTh1 = 250;
+const int selectedSegLowTh = 500;
+const int selectedSegHighTh2 = 750;
+
 const int startDisplayPos = 0;
 const int startSegmentPos = 7;
+
 const int millisToSeconds = 1000;
 
 const int joyStickMoves[2][2] = {
@@ -57,8 +64,7 @@ const bool startState = true;
 
 const unsigned long resetTime = 2000;
 
-bool isChoosingSegment;
-
+//negative numbers appear when the display is changed
 int nextState[numberOfSegments][numberOfDirections] = {
         //UP DOWN LEFT RIGHT
           {-9,  6,  5,  1}, // a
@@ -71,6 +77,7 @@ int nextState[numberOfSegments][numberOfDirections] = {
           { 3, -9, -9, -9}  // dp
 };
 
+// configured for common cathod
 byte segmentsStates[numberOfDisplays][numberOfSegments] = {
         // a, b, c, d, e, f, g, dp
           {0, 0, 0, 0, 0, 0, 0, 0}, // display 0
@@ -79,13 +86,13 @@ byte segmentsStates[numberOfDisplays][numberOfSegments] = {
           {0, 0, 0, 0, 0, 0, 0, 0}  // display 3
 };
 
+//pos 0 for x axis and 1 for y axis
 bool joystickAxisMoved[2];
 bool joystickAxisTimerWasStarted[2];
-
+bool isChoosingSegment;
 volatile bool wasButtonPressed;
 
-unsigned long joystickAxisTimerStart[2];
-
+unsigned long joystickAxisTimerStart[2];\
 volatile unsigned long lastDebounceTime;
 
 int currentDisplayPos;
@@ -115,16 +122,19 @@ void setup() {
   if (pnpTransistors) {
     highSegmentValue = LOW;
     lowSegmentValue = HIGH;
+    for (int i = index; i < numberOfDisplays; i++)
+      for (int j = index; j < numberOfSegments; j++)
+        segmentsStates[i][j] = lowSegmentValue;
   }
 
   currentDisplayPos = startDisplayPos;
   currentSegmentPos = startSegmentPos;
   isChoosingSegment = startState;
 
-  for (int i = 0; i < numberOfSegments; i++)
+  for (int i = index; i < numberOfSegments; i++)
     pinMode(sevenSegmentPinsArray[i], OUTPUT);
 
-  for (int i = 0; i < numberOfDisplays; i++)
+  for (int i = index; i < numberOfDisplays; i++)
     pinMode(fourDisplayPinsArray[i], OUTPUT);
     
   pinMode(pinJoystickButton, INPUT_PULLUP);
@@ -133,38 +143,37 @@ void setup() {
 
   attachInterrupt(digitalPinToInterrupt(pinJoystickButton), buttonInterrupt, CHANGE);
   digitalWrite(sevenSegmentPinsArray[currentSegmentPos], HIGH);
+
   Serial.begin(9600);
 }
 
-byte state = HIGH;
-
 void loop() {
-  if (wasButtonPressed && millis() - lastDebounceTime > resetTime) {
+  if (wasButtonPressed && millis() - lastDebounceTime > resetTime && isChoosingSegment) {
     wasButtonPressed = false;
     resetDisplays();
   }
 
-  moveSegmentAxis(indexXAxis);
+  moveJoystickAxis(indexXAxis);
   if (isChoosingSegment)
-    moveSegmentAxis(indexYAxis);
+    moveJoystickAxis(indexYAxis);
 
   displaySegments();
 }
 
-//interrupt function with debounce that signals that button was pressed
+//interrupt function with debounce which signals that button was pressed
 void buttonInterrupt() {
-  unsigned long buttonPressedTime = millis() - lastDebounceTime;
   if (digitalRead(pinJoystickButton) != isButtonReleasedState) {
     lastDebounceTime = millis();
     wasButtonPressed = true;
   }
-  else if (buttonPressedTime > debounceDelay && wasButtonPressed) {
+  else if (millis() - lastDebounceTime > debounceDelay && wasButtonPressed) {
     isChoosingSegment = !isChoosingSegment;
     wasButtonPressed = false;
   }
 }
 
-void moveSegmentAxis(int axis) {
+//when in choosingSegmentState can move the segment, in the other state can change LED's state
+void moveJoystickAxis(int axis) {
   int joystickAxisInput = analogRead(joystickAxisPinsArray[axis]);
   if (joystickAxisInput < minNeutralJoystickValue || joystickAxisInput > maxNeutralJoystickValue) {
     if (!joystickAxisTimerWasStarted[axis]) {
@@ -191,21 +200,23 @@ void moveSegmentAxis(int axis) {
   }
 }
 
+//computes the next state and checks if is possible, if yes changes the segment pos and display pos
 void moveSelection(int axis, int direction) {
   int nextDisplayPos = currentDisplayPos;
   int nextSegmentPos = nextState[currentSegmentPos][joyStickMoves[axis][direction]];
-  if (nextSegmentPos < 0) {
-    if (direction == leftOrDown && currentDisplayPos > 0)
-      nextDisplayPos = currentDisplayPos - 1;
-    else if (direction == rightOrUp && currentDisplayPos < numberOfDirections - 1)
-      nextDisplayPos = currentDisplayPos + 1;
+  if (nextSegmentPos < index) {
+    if (direction == leftOrDown && currentDisplayPos > index)
+      nextDisplayPos = currentDisplayPos - incrementVar;
+    else if (direction == rightOrUp && currentDisplayPos < numberOfDirections - incrementVar)
+      nextDisplayPos = currentDisplayPos + incrementVar;
     if (nextDisplayPos == currentDisplayPos) {
-      nextSegmentPos = -1;
+      nextSegmentPos = notAState;
     } else {
       nextSegmentPos = numberOfSegments + nextSegmentPos;
     }
   }
-  if (nextSegmentPos != -1) {
+
+  if (nextSegmentPos != notAState) {
     digitalWrite(sevenSegmentPinsArray[currentSegmentPos], LOW);
     currentDisplayPos = nextDisplayPos;
     currentSegmentPos = nextSegmentPos;
@@ -214,11 +225,11 @@ void moveSelection(int axis, int direction) {
 
 void displaySegments() {
   int milliSeconds = millis () % millisToSeconds;
-  for (int i = 0; i < numberOfDisplays; i++) {
+  for (int i = index; i < numberOfDisplays; i++) {
     digitalWrite(fourDisplayPinsArray[i], highDisplayValue);
     for (int j = index; j < numberOfSegments; j++) {
       if (i == currentDisplayPos && j == currentSegmentPos && isChoosingSegment)
-        if (milliSeconds < 250 || milliSeconds > 500 && milliSeconds < 750)
+        if (milliSeconds < selectedSegHighTh1 || milliSeconds > selectedSegLowTh && milliSeconds < selectedSegHighTh2)
          digitalWrite(sevenSegmentPinsArray[currentSegmentPos], highSegmentValue);
         else
           digitalWrite(sevenSegmentPinsArray[currentSegmentPos], lowSegmentValue);
