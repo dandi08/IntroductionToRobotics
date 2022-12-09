@@ -97,16 +97,27 @@ I created a dodge mini game: there are 4 enemies, one on each side of the matrix
 For the menu I created few stages:
 1) When game starts a greeting message will appear for few secons
 2) After that, the main menu will appear, with multiple options:
+
   -start game
+  
   -leaderboard
+  
   -setting
+  
   -how to play
+  
   -credits
+  
   a) start game will display a screen where player can choose a name and then press the button to start the game
+  
   b) ledearboard will display top 5 scores
+  
   c) settings will display few options: matrix brightness, lcd brightness and contrast and starting difficulty
+  
   d) how to play will list game commands
+  
   e) credits will display the author and the github where people can find the project
+  
 3) During the game the lcd displays player name. 
 4) When player loses the game pauses and the lcd displays player's name and score.
 
