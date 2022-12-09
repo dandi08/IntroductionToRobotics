@@ -61,4 +61,25 @@ I've used a 4 display 7 segment display. I've kept the same requirements but for
   <img src="tema3/tema3_poza2.jpeg" width="350" title="angle1" > <br>
 </p>
 
-Video link: https://drive.google.com/file/d/1m-6RgrHTZjZSGyU8Q3obbON2Pv1ohxRz/view?usp=share_link
+Video link: https://drive.google.com/file/d/1g-SBHOIyHQnBhjMFPgNP_gBdymhwdEgE/view?usp=share_link
+
+# Homework 4
+Task requirements:
+
+Using 7 segment display, 1 joystic, resistors and wires accordingly, create a minigame where the player can set each display to a digit in hexa.
+ 
+Implementation:
+
+There are 2 states: in the first one the player can move through the displays by using the x axis from the joystick. Dp led from the selected display will blink to
+show the player which display he is currently on. After pressing the button the second state kicks in, now the player can change the number displayed by using y axis
+and the dp stays on to signal that the game is in state 2. After pressing the button again the game turn back into first state and so on.
+Additonally, by long pressing the button in state 1, the display resets to the initial state.
+
+<p align="center">
+  <img src="tema4/tema4_poza1.jpeg" width="350" title="angle1" > <br>
+</p>
+<p align="center">
+  <img src="tema4/tema4_poza2.jpeg" width="350" title="angle1" > <br>
+</p>
+
+Video link: https://drive.google.com/file/d/1UwrktR-YvB-5GNeu_UTJiPILpDhP8uEh/view?usp=share_link
