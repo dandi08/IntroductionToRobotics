@@ -15,6 +15,7 @@ const byte dinPin = 12;
 const byte clockPin = 11;
 const byte loadPin = 10;
 
+const byte buzzerPin = 3;
 const byte buttonPin = 2;
 bool wasButtonPressed;
 
@@ -121,6 +122,7 @@ void setup() {
     isButtonReleasedState = HIGH;
   }
 
+  pinMode(buzzerPin, OUTPUT);
   pinMode(buttonPin, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(buttonPin), buttonInterrupt, CHANGE);
   if (commonAnodeMatrix) {
@@ -216,6 +218,8 @@ void moveJoystickAxis(byte axis, bool inGame) {
     }
     if (millis() - joystickAxisTimerStart[axis] > debounceDelay  && (!joystickAxisMoved[axis] || inGame)) {
       joystickAxisMoved[axis] = true;
+      if (gameState != inGameState)
+        tone(buzzerPin, 800, 100);
       switch(gameState) {
         case mainMenuState:
           selectOptions(mainMenuNumberOfOptions, mainMenuSelectedOption, mainMenuTopOption, mainMenuBottomOption, joystickAxisInput);
