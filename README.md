@@ -121,3 +121,8 @@ For the menu I created few stages:
 3) During the game the lcd displays player name. 
 4) When player loses the game pauses and the lcd displays player's name and score.
 
+<p align="center">
+  <img src="tema5/tema5_poza1.jpeg" width="350" title="angle1" > <br>
+</p>
+
+Video link: https://drive.google.com/file/d/1Qg6Ng-k4l-_6hpUIt1SjbWH_cGsrGW0l/view?usp=share_link
