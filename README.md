@@ -12,8 +12,8 @@ Using minimum 1 RGB led and 3 potentiometers, resistors and wires accordingly, c
 Values coming from potentiometers must be mapped to values that will be given as input for the led.
 
 <p align="center">
-  <img src="tema1/tema1_poza1.jpeg" width="350" title="angle1" > <br>
-  <img src="tema1/tema1_poza2.jpeg" width="350" title="angle2">
+  <img src="homework1/tema1_poza1.jpeg" width="350" title="angle1" > <br>
+  <img src="homework1/tema1_poza2.jpeg" width="350" title="angle2">
 </p>
 
 Video link: https://drive.google.com/file/d/1j_6o8F_s4XQYbD_QbgjprxdQxxQyMSDT/view?usp=sharing
@@ -37,7 +37,7 @@ cars' traffic light turns green again. Aditionally, after pedestrians' traffic l
 Stay safe and be carefull when you cross the stree regardless of the traffic light color!!!
 
 <p align="center">
-  <img src="tema2/tema2_poza1.jpeg" width="350" title="angle1" > <br>
+  <img src="homework2/tema2_poza1.jpeg" width="350" title="angle1" > <br>
 </p>
 
 Video link: https://drive.google.com/file/d/1m-6RgrHTZjZSGyU8Q3obbON2Pv1ohxRz/view?usp=share_link
@@ -55,10 +55,10 @@ Implementation:
 I've used a 4 display 7 segment display. I've kept the same requirements but for my implementation the player can walk through all the displays.
 
 <p align="center">
-  <img src="tema3/tema3_poza1.jpeg" width="350" title="angle1" > <br>
+  <img src="homework3/tema3_poza1.jpeg" width="350" title="angle1" > <br>
 </p>
 <p align="center">
-  <img src="tema3/tema3_poza2.jpeg" width="350" title="angle1" > <br>
+  <img src="homework3/tema3_poza2.jpeg" width="350" title="angle1" > <br>
 </p>
 
 Video link: https://drive.google.com/file/d/1g-SBHOIyHQnBhjMFPgNP_gBdymhwdEgE/view?usp=share_link
@@ -76,10 +76,10 @@ and the dp stays on to signal that the game is in state 2. After pressing the bu
 Additonally, by long pressing the button in state 1, the display resets to the initial state.
 
 <p align="center">
-  <img src="tema4/tema4_poza1.jpeg" width="350" title="angle1" > <br>
+  <img src="homework4/tema4_poza1.jpeg" width="350" title="angle1" > <br>
 </p>
 <p align="center">
-  <img src="tema4/tema4_poza2.jpeg" width="350" title="angle1" > <br>
+  <img src="homework4/tema4_poza2.jpeg" width="350" title="angle1" > <br>
 </p>
 
 Video link: https://drive.google.com/file/d/1UwrktR-YvB-5GNeu_UTJiPILpDhP8uEh/view?usp=share_link
@@ -122,7 +122,7 @@ For the menu I created few stages:
 4) When player loses the game pauses and the lcd displays player's name and score.
 
 <p align="center">
-  <img src="tema5/tema5_poza1.jpeg" width="350" title="angle1" > <br>
+  <img src="homework5/tema5_poza1.jpeg" width="350" title="angle1" > <br>
 </p>
 
 Video link: https://drive.google.com/file/d/1Qg6Ng-k4l-_6hpUIt1SjbWH_cGsrGW0l/view?usp=share_link
